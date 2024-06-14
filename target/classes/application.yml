@@ -1,0 +1,78 @@
+server:
+  port: 8087
+
+
+spring:
+  application:
+    name: cpt-ehcache
+
+  datasource:
+    #druid 数据源专有配置
+    druid:
+      min-idle: 5
+      initial-size: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+
+      #配置监控统计拦截的filters，stat:监控统计、slf4j：日志记录、wall：防御sql注入
+      #如果允许时报错  java.lang.ClassNotFoundException: org.apache.log4j.Priority
+      filters: stat,wall,slf4j
+      max-pool-prepared-statement-per-connection-size: 20
+      use-global-data-source-stat: true
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+
+    url: jdbc:clickhouse://10.1.5.68:8123/nsmp_820_test
+    username: default
+    password: ad_DA236!#686
+    driver-class-name: ru.yandex.clickhouse.ClickHouseDriver
+  profiles:
+    active: dev
+
+#最大文件个数
+over:
+  num: 2
+
+#    url: jdbc:clickhouse://10.1.5.68:8123/sca_ck_dev
+#    username: scademock
+#    password: aud_FGD!#253W
+#    driver-class-name: ru.yandex.clickhouse.ClickHouseDriver
+
+
+
+#  cache:
+#    type: ehcache
+#    ehcache:
+#      config: ehcache.xml
+
+#
+#  cache:
+#    type: ehcache
+#    ehcache:
+#      config: classpath:ehcache.xml
+
+
+
+#mybatis-plus.configuration.log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+# csv文件
+csv:
+  path: D:\Java\company\safety\test\cpt测试数据\
+
+# 线程池配置
+#扫描任务线程池配置
+threadPool:
+  corePoolSize: 4
+  maxPoolSize: 8
+  keepAliveTime: 120
+  maxQueue: 100
+
+

@@ -1,0 +1,55 @@
+<ehcache>
+
+<!--
+name: Cache的名称，必须是唯一的(ehcache会把这个cache放到HashMap里).
+maxElementsInMemory: 内存中保持的对象数量。
+maxElementsOnDisk: DiskStore中保持的对象数量，默认值为0，表示不限制
+eternal: 是否是永恒数据，如果是，则它的超时设置会被忽略.
+overflowToDisk: 如果内存中数据数量超过maxElementslnMemory限制，是否要缓存到磁盘上.
+timeToldleSeconds: 对象空闲时间，指对象在多长时间没有被访问就会失效。只对eternal为ialse的有效。默认值0，表示一直可以访
+timeToLiveSeconds: 对象存活时间，指对象从创建到失效所需要的时间。只对etema为false的有效。默认值0，表示一直可以访问
+diskPersistent: 是否在磁盘上持久化。指重启ivm后，数据是否有效。默认为false。
+diskExpiryThreadlntervalSeconds: 对象检测线程运行时间间隔。标识对象状态的线程多长时间运行一次
+diskSpoolBuferSizeMB: DiskStore使用的磁盘大小，默认值30MB。每个cache使用各自的DiskStore.
+memoryStoreEvictionPolicy: 如果内存中数据超过内存限制，向磁盘缓存时的策略。默认值LRU，可选FIFO、LFU。
+-->
+
+    <cache name="md5"
+           maxEntriesLocalHeap="1000000"
+           eternal="true"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="300"
+           memoryStoreEvictionPolicy="LFU">
+<!--        <persistence strategy="localRestartable" />持久化 企业版本-->
+        <searchable>
+            <searchAttribute name="md5" expression="key"></searchAttribute>
+        </searchable>
+    </cache>
+
+    <cache name="gav"
+           maxEntriesLocalHeap="1000000"
+           eternal="true"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="300"
+           memoryStoreEvictionPolicy="LFU">
+        <searchable>
+            <searchAttribute name="name" expression="key.getName()"></searchAttribute>
+            <searchAttribute name="group" expression="key.getGroup()"></searchAttribute>
+            <searchAttribute name="version" expression="key.getVersion()"></searchAttribute>
+            <searchAttribute name="compId" expression="key.getCompId()"></searchAttribute>
+        </searchable>
+    </cache>
+
+    <cache name="fileName"
+           maxEntriesLocalHeap="1000000"
+           eternal="true"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="300"
+           memoryStoreEvictionPolicy="LFU">
+        <searchable>
+            <searchAttribute name="fileName" expression="key.getFileName()"></searchAttribute>
+            <searchAttribute name="compId" expression="key.getCompId()"></searchAttribute>
+        </searchable>
+    </cache>
+
+</ehcache>
